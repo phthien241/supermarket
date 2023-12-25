@@ -18,6 +18,12 @@ export class NavBarComponent {
   navigateToLogin() {
     this.router.navigate(["/login"]);
   }
+  navigateToCart(){
+    this.router.navigate(["/cart"]);
+  }
+  navigateToHome(){
+    this.router.navigate([""]);
+  }
   @HostBinding('@fadeInOut') fadeInOut = true;
   showBrowseProduct: boolean = false;
   showSpecialOffer: boolean = false;

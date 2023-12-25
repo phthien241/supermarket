@@ -1,0 +1,47 @@
+<app-nav-bar />
+<div class="py-8 px-24">
+    <div>
+        <h1 class="font-bold text-3xl mb-8">Shopping Cart</h1>
+        <hr>
+        <div class="flex flex-wrap">
+            <div class="flex w-1/2">
+                <div class="w-full">
+                    <app-product-cart-card></app-product-cart-card>
+                    <app-product-cart-card></app-product-cart-card>
+                </div>
+                
+            </div>
+            <div class="order-summary flex w-1/2 justify-center">
+                <div class="fixed w-96 h-96 bg-gray-100 rounded-lg">
+                    <div class="p-6">
+                        <p class="font-bold mb-4 text-lg">Order Summary</p>
+                        <div class="flex my-3 justify-between">
+                            <p class="">Sub total</p>
+                            <p>$50.00</p>
+                        </div>
+                        <hr>
+                        <div class="flex my-3 justify-between">
+                            <p>Shipping estimate</p>
+                            <p>$5.00</p>
+                        </div>
+                        <hr>
+                        <div class="flex my-3 justify-between">
+                            <p>Tax estimate</p>
+                            <p>$5.00</p>
+                        </div>
+                        <hr>
+                        <div class="flex my-6 font-bold justify-between">
+                            <p>Order total</p>
+                            <p>$60.00</p>
+                        </div>
+
+                        <hr>
+                        <button type="button" class="text-white w-full bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-3 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Checkout</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

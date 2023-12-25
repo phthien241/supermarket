@@ -1,0 +1,32 @@
+<div class="mt-8">
+    <div class="flex">
+        <img class="w-64 h-48 mr-8" src="../../../assets/images/bakery.png" alt="">
+        <div class="">
+            <p class="font-semibold text-lg">Bakery</p>
+            <p>$ 32.00</p>
+            <div class="flex items-center">
+                <button (click)="decrementQuantity()" [disabled]="quantity===0"
+                    class="px-3 py-1 w-10 h-10 border rounded text-lg">-</button>
+                <p class="mx-2">{{ quantity }}</p>
+                <button (click)="incrementQuantity()" class="px-3 py-1 w-10 h-10 border rounded text-lg">+</button>
+            </div>
+        </div>
+    </div>
+    <hr>
+</div>
+<div class="mt-8">
+    <div class="flex">
+        <img class="w-64 h-48 mr-8" src="../../../assets/images/bakery.png" alt="">
+        <div class="">
+            <p class="font-semibold text-lg">Bakery</p>
+            <p>$ 32.00</p>
+            <div class="flex items-center">
+                <button (click)="decrementQuantity()" [disabled]="quantity===0"
+                    class="px-3 py-1 w-10 h-10 border rounded text-lg">-</button>
+                <p class="mx-2">{{ quantity }}</p>
+                <button (click)="incrementQuantity()" class="px-3 py-1 w-10 h-10 border rounded text-lg">+</button>
+            </div>
+        </div>
+    </div>
+    <hr>
+</div>
