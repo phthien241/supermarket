@@ -11,23 +11,8 @@
     </div>
   </div>
   <div class="flex flex-wrap">
-    <div class="w-1/5 flex justify-center">
-      <app-product-card [image]="imageUrl" [price]="price" [name]="name"></app-product-card>
-    </div>
-    <div class="w-1/5 flex justify-center">
-      <app-product-card [image]="imageUrl" [price]="price" [name]="name"></app-product-card>
-    </div>
-    <div class="w-1/5 flex justify-center">
-      <app-product-card [image]="imageUrl" [price]="price" [name]="name"></app-product-card>
-    </div>
-    <div class="w-1/5 flex justify-center">
-      <app-product-card [image]="imageUrl" [price]="price" [name]="name"></app-product-card>
-    </div>
-    <div class="w-1/5 flex justify-center">
-      <app-product-card [image]="imageUrl" [price]="price" [name]="name"></app-product-card>
-    </div>
-    <div class="w-1/5 flex justify-center">
-      <app-product-card [image]="imageUrl" [price]="price" [name]="name"></app-product-card>
+    <div *ngFor="let product of products" class="w-1/5 flex justify-center">
+      <app-product-card [image]="product.image" [price]="product.price" [name]="product.name"></app-product-card>
     </div>
   </div>
 </div>

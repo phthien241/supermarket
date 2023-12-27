@@ -1,13 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { MsalRedirectComponent } from '@azure/msal-angular';
 
 const routes: Routes = [
-  {
-    path:'',
-    loadChildren: () => import('./home-page/home-page.module').then(m => m.HomePageModule) 
-
-  }
-  ,
+  
   { 
     path: 'login', 
     loadChildren: () => import('./login/login.module').then(m => m.LoginModule) 
@@ -24,6 +20,11 @@ const routes: Routes = [
     path: 'cart', 
     loadChildren: () => import('./shopping-cart/shopping-cart.module').then(m => m.ShoppingCartModule) 
   },
+  {
+    path:'',
+    loadChildren: () => import('./home-page/home-page.module').then(m => m.HomePageModule) 
+  }
+  ,
 ];
 
 @NgModule({
