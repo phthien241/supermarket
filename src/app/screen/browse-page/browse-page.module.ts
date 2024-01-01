@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { BrowsePageRoutingModule } from './browse-page-routing.module';
 import { BrowsePageComponent } from './browse-page/browse-page.component';
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   declarations: [

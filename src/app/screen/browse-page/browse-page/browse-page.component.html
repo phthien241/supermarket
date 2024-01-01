@@ -12,7 +12,8 @@
   </div>
   <div class="flex flex-wrap">
     <div *ngFor="let product of products" class="w-1/5 flex justify-center">
-      <app-product-card [image]="product.image" [price]="product.price" [name]="product.name"></app-product-card>
+      <app-product-card [product]="product" [productInCart]="carts" (addToCart)="handleAddToCart($event)"
+        (updateCart)="handleUpdateToCart($event)"></app-product-card>
     </div>
   </div>
 </div>

@@ -2,8 +2,9 @@ import { Component, HostBinding } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Router } from '@angular/router';
 import { MsalBroadcastService, MsalService } from '@azure/msal-angular';
-import { UserService } from '../services/user.service';
-import { Cart } from '../models/cart.model';
+import { UserService } from '../../services/user.service';
+import { CartItem } from 'src/app/models/product-update.model';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -18,9 +19,9 @@ import { Cart } from '../models/cart.model';
 })
 export class NavBarComponent {
   firstName: string;
-  carts: Cart[];
+  carts: CartItem[];
   totalPrice: number = 0.00;
-  constructor(private router: Router, private userService: UserService, private broadcastService: MsalBroadcastService) { }
+  constructor(private router: Router, private userService: UserService, private cartService: CartService) { }
 
   ngOnInit(): void {
     this.userService.checkAuthenticated();
@@ -30,13 +31,22 @@ export class NavBarComponent {
       }
     })
     this.userService.getCart().subscribe({
-      next: (cart) => {
-        this.carts = cart;
+      next: (carts) => {
+        this.totalPrice = 0.00;
+        this.carts = carts.map(cart => ({
+          name: cart.product.name,
+          image: cart.product.image,
+          price: cart.product.price,
+          quantity: cart.quantity,
+          _id: cart.product._id
+        }));
         for (let cart of this.carts) {
-          this.totalPrice += cart.product.price * cart.quantity;
-
+          this.totalPrice += cart.price * cart.quantity;
         }
       }
+    })
+    this.cartService.totalPrice.subscribe(price=>{
+      this.totalPrice+=price;
     })
   }
   login() {

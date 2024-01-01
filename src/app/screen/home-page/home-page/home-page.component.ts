@@ -10,6 +10,6 @@ export class HomePageComponent {
   name = "Devil's Lair Hidden Cave Chardonnay 750ml";
   price = 20.00;
   ngOnInit(){
-    console.log("he")
+    
   }
 }

@@ -1,6 +1,12 @@
 <div class="w-48 border border-black-500 rounded-lg p-4 hover:cursor-pointer m-4 text-center">
-    <img src={{image}} alt="" class="w-48 h-48">
-    <h1 class="font-semibold text-2xl">${{price}}</h1>
-    <h2>{{name}}</h2>
-    <button class="bg-green-500 shadow rounded px-4 py-2 hover:bg-green-700 mt-4">Add to cart</button>
+    <img src={{product.image}} alt="" class="w-48 h-48">
+    <h1 class="font-semibold text-2xl">${{product.price}}</h1>
+    <h2>{{product.name}}</h2>
+    <button *ngIf="!isProductInCart()" class="bg-green-500 shadow rounded px-4 py-2 hover:bg-green-700 mt-4"
+        (click)="onAddToCart()">Add to cart</button>
+    <div *ngIf="isProductInCart()" class="flex items-center justify-center mt-4">
+        <button (click)="onUpdateCart(false)" class="px-3 py-1 w-10 h-10 border rounded text-lg">-</button>
+        <p class="mx-2">{{quantity}}</p>
+        <button (click)="onUpdateCart(true)" class="px-3 py-1 w-10 h-10 border rounded text-lg">+</button>
+    </div>
 </div>

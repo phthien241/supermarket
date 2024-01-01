@@ -3,14 +3,14 @@ import { Injectable } from '@angular/core';
 import { MsalService } from '@azure/msal-angular';
 import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environment';
-import { Cart } from '../models/cart.model';
+import { Product } from '../models/product.model';
+import { CartItem } from '../models/product-update.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  cart = [];
-  private authID ="";
+  private cart:CartItem[] = [];
   constructor(private authService: MsalService, private http: HttpClient) { 
   }
 
@@ -24,10 +24,9 @@ export class UserService {
       next: (authResult) => {
         const firstName = authResult.account.idTokenClaims.given_name as string;
         const lastName = authResult.account.idTokenClaims.family_name as string;
-        const authID = authResult.uniqueId;
-        this.http.post<{cart:Cart[]}>(`${environment.apiUrl}/api/users`,{firstName: firstName, lastName: lastName, authID: authID}).subscribe({
+        const authID = authResult.account.homeAccountId;
+        this.http.post<{cart:CartItem[]}>(`${environment.apiUrl}/api/users`,{firstName: firstName, lastName: lastName, authID: authID}).subscribe({
           next:(response)=>{
-            this.authID = authID
             this.cart = response.cart;
           },
           error:(err)=>{
@@ -45,31 +44,39 @@ export class UserService {
             })
           }
         }
-      },
-      // complete:()=>{
-      //   this.http.post<{message:string}>(`${environment.apiUrl}/api/users/cart`,{authID: this.authID}).subscribe({
-      //     next:(response)=>{
-      //       console.log(response.message)
-      //     },
-      //     error:(err)=>{
-      //       console.log(err)
-      //     }
-      //   })
-      // }
+      }
     });
   }
-
-  
 
   logout() {
     this.authService.logout();
   }
 
+  updateCart(product: CartItem){
+    const authID = this.authService.instance.getAllAccounts()[0].homeAccountId
+    this.http.post<{message:string}>(`${environment.apiUrl}/api/users/cart-update`,{product: product, authID: authID}).subscribe(res=>{
+      next:()=>{
+        console.log(res.message);
+      }
+    })
+  }
+
   private firstNameObservable = new BehaviorSubject<string>(localStorage.getItem("userName"))
   firstName = this.firstNameObservable.asObservable();
 
-  private cartObservablle = new BehaviorSubject<Cart[]>(this.cart);
+  private cartObservablle = new BehaviorSubject<any[]>(this.cart);
   getCart(){
+    const authID = this.authService.instance.getAllAccounts()[0].homeAccountId;
+    this.http.post<{cart:any[]}>(`${environment.apiUrl}/api/users/get-cart`,{authID: authID}).subscribe({
+      next:(response)=>{
+        this.cart = response.cart;
+        console.log(this.cart)
+        this.cartObservablle.next(this.cart);
+      },
+      error:(err)=>{
+        console.log(err)
+      }
+    })
     return this.cartObservablle.asObservable();
   }
 
@@ -82,4 +89,6 @@ export class UserService {
     localStorage.removeItem('userName');
     this.firstNameObservable.next('');
   }
+
+  
 }
