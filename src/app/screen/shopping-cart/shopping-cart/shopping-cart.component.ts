@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { CartItem } from 'src/app/models/product-update.model';
 import { CartService } from 'src/app/services/cart.service';
 import { UserService } from 'src/app/services/user.service';
@@ -12,7 +13,7 @@ export class ShoppingCartComponent {
   cartItems: CartItem[] = [];
   totalPrice: number = 0.00;
   
-  constructor(private userService: UserService, private cartService: CartService){}
+  constructor(private userService: UserService, private cartService: CartService, private router: Router){}
   ngOnInit(){
     this.userService.getCart().subscribe(carts => {
       this.totalPrice = 0.00;
@@ -45,5 +46,9 @@ export class ShoppingCartComponent {
       return cartItem;
     }
     );
+  }
+
+  handleCheckout(){
+    this.router.navigate(["/confirm"])
   }
 }

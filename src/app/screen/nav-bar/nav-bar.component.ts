@@ -18,9 +18,63 @@ import { CartService } from 'src/app/services/cart.service';
   ]
 })
 export class NavBarComponent {
+  categories = [
+    {
+      name: 'Fruit & Vegetables',
+      imageLink: '../../assets/images/fruit-veg.png'
+    },
+    {
+      name: 'Bakery',
+      imageLink: '../../assets/images/bakery.png'
+    },
+    {
+      name: 'Poultry, Meat & Seafood',
+      imageLink: '../../assets/images/meat.png'
+    },
+    {
+      name: 'Dairy, Eggs & Fridge',
+      imageLink: '../../assets/images/milk.png'
+    },
+    {
+      name: 'Freezer',
+      imageLink: '../../assets/images/freezer.png'
+    },
+    {
+      name: 'Drinks',
+      imageLink: '../../assets/images/drink.png'
+    },
+    {
+      name: 'Beer, Wine & Spirits',
+      imageLink: '../../assets/images/beer.png'
+    },
+    {
+      name: 'Cleaning',
+      imageLink: '../../assets/images/cleaning.png'
+    },
+    {
+      name: 'Pharmacy',
+      imageLink: '../../assets/images/pharmacy.png'
+    },
+    {
+      name: 'Pet',
+      imageLink: '../../assets/images/pet.png'
+    },
+    {
+      name: 'Home & Lifestyle',
+      imageLink: '../../assets/images/home.png'
+    }
+  ];
   firstName: string;
   carts: CartItem[];
   totalPrice: number = 0.00;
+
+  @HostBinding('@fadeInOut') fadeInOut = true;
+  showBrowseProduct: boolean = false;
+  showSpecialOffer: boolean = false;
+  showChristmas: boolean = false;
+  showBetterTomorrow: boolean = false;
+  showAccountDropdown: boolean = false;
+
   constructor(private router: Router, private userService: UserService, private cartService: CartService) { }
 
   ngOnInit(): void {
@@ -45,8 +99,8 @@ export class NavBarComponent {
         }
       }
     })
-    this.cartService.totalPrice.subscribe(price=>{
-      this.totalPrice+=price;
+    this.cartService.totalPrice.subscribe(price => {
+      this.totalPrice += price;
     })
   }
   login() {
@@ -62,12 +116,7 @@ export class NavBarComponent {
   navigateToHome() {
     this.router.navigate([""]);
   }
-  @HostBinding('@fadeInOut') fadeInOut = true;
-  showBrowseProduct: boolean = false;
-  showSpecialOffer: boolean = false;
-  showChristmas: boolean = false;
-  showBetterTomorrow: boolean = false;
-  showAccountDropdown: boolean = false;
+  
   toggleBrowseProduct() {
     this.showBrowseProduct = true;
     this.showChristmas = false;
@@ -94,5 +143,9 @@ export class NavBarComponent {
   }
   toggleAccountDropdown() {
     this.showAccountDropdown = !this.showAccountDropdown
+  }
+  navigateToCategory(category: string) {
+    this.router.navigate([`/shop/browse/${category.toLowerCase()}`])
+    this.closeBrowseProduct();
   }
 }

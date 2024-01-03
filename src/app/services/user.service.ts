@@ -5,13 +5,14 @@ import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environment';
 import { Product } from '../models/product.model';
 import { CartItem } from '../models/product-update.model';
+import { CustomerOrder } from '../models/customer-order.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private cart:CartItem[] = [];
-  constructor(private authService: MsalService, private http: HttpClient) { 
+  private cart: CartItem[] = [];
+  constructor(private authService: MsalService, private http: HttpClient) {
   }
 
   checkAuthenticated() {
@@ -24,12 +25,13 @@ export class UserService {
       next: (authResult) => {
         const firstName = authResult.account.idTokenClaims.given_name as string;
         const lastName = authResult.account.idTokenClaims.family_name as string;
-        const authID = authResult.account.homeAccountId;
-        this.http.post<{cart:CartItem[]}>(`${environment.apiUrl}/api/users`,{firstName: firstName, lastName: lastName, authID: authID}).subscribe({
-          next:(response)=>{
+        const authID = authResult.account.localAccountId;
+        console.log(authResult);
+        this.http.post<{ cart: CartItem[] }>(`${environment.apiUrl}/api/users`, { firstName: firstName, lastName: lastName, authID: authID }).subscribe({
+          next: (response) => {
             this.cart = response.cart;
           },
-          error:(err)=>{
+          error: (err) => {
             console.log(err)
           }
         })
@@ -52,10 +54,10 @@ export class UserService {
     this.authService.logout();
   }
 
-  updateCart(product: CartItem){
-    const authID = this.authService.instance.getAllAccounts()[0].homeAccountId
-    this.http.post<{message:string}>(`${environment.apiUrl}/api/users/cart-update`,{product: product, authID: authID}).subscribe(res=>{
-      next:()=>{
+  updateCart(product: CartItem) {
+    const authID = this.authService.instance.getAllAccounts()[0].localAccountId
+    this.http.post<{ message: string }>(`${environment.apiUrl}/api/users/cart-update`, { product: product, authID: authID }).subscribe(res => {
+      next: () => {
         console.log(res.message);
       }
     })
@@ -65,19 +67,45 @@ export class UserService {
   firstName = this.firstNameObservable.asObservable();
 
   private cartObservablle = new BehaviorSubject<any[]>(this.cart);
-  getCart(){
-    const authID = this.authService.instance.getAllAccounts()[0].homeAccountId;
-    this.http.post<{cart:any[]}>(`${environment.apiUrl}/api/users/get-cart`,{authID: authID}).subscribe({
-      next:(response)=>{
+  getCart() {
+    const authID = this.authService.instance.getAllAccounts()[0].localAccountId;
+    this.http.post<{ cart: any[] }>(`${environment.apiUrl}/api/users/get-cart`, { authID: authID }).subscribe({
+      next: (response) => {
         this.cart = response.cart;
-        console.log(this.cart)
         this.cartObservablle.next(this.cart);
       },
-      error:(err)=>{
+      error: (err) => {
         console.log(err)
       }
     })
     return this.cartObservablle.asObservable();
+  }
+
+  removeCart(){
+    const authID = this.authService.instance.getAllAccounts()[0].localAccountId;
+    this.http.post<{message:string}>(`${environment.apiUrl}/api/users/remove-cart`, { authID: authID }).subscribe({
+      next:(response)=>{
+        console.log(response.message);
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
+  }
+
+  createOrder(order: CustomerOrder) {
+    const authID = this.authService.instance.getAllAccounts()[0].localAccountId;
+    this.http.post<{ message: string }>(`${environment.apiUrl}/api/users/create-order`, { order: order, authID: authID }).subscribe({
+      next: (response) => {
+        console.log(response.message);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+      complete:()=>{
+        this.removeCart();
+      }
+    })
   }
 
   updateFirstName(name: string) {
@@ -90,5 +118,5 @@ export class UserService {
     this.firstNameObservable.next('');
   }
 
-  
+
 }

@@ -20,6 +20,10 @@ const routes: Routes = [
     path: 'cart', 
     loadChildren: () => import('./screen/shopping-cart/shopping-cart.module').then(m => m.ShoppingCartModule) 
   },
+  { 
+    path: 'confirm', 
+    loadChildren: () => import('./screen/confirm-cart/confirm-cart.module').then(m => m.ConfirmCartModule) 
+  },
   {
     path:'',
     loadChildren: () => import('./screen/home-page/home-page.module').then(m => m.HomePageModule) 

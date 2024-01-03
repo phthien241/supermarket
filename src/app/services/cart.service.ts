@@ -21,7 +21,6 @@ export class CartService {
   }
 
   updateCart(product: CartItem) {
-    console.log(product)
     this.totalPriceObservable.next(product.price)
     this.updateSubject.next(product);
   }

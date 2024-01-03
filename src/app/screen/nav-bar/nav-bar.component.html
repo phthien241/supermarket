@@ -9,61 +9,13 @@
             </div>
         </div>
         <hr>
-        <button
-            class="flex items-center w-full bg-white font-semibold py-2 px-4 hover:bg-gray-100 transition-colors duration-150">
-            <img src="../../assets/images/fruit-veg.png" class="w-16 h-16 mr-4" alt="">
-            Fruit & Vegetables
-        </button>
-        <button
-            class="flex items-center w-full bg-white font-semibold py-2 px-4 hover:bg-gray-100 transition-colors duration-150">
-            <img src="../../assets/images/bakery.png" class="w-16 h-16 mr-4" alt="">
-            Bakery
-        </button>
-        <button
-            class="flex items-center w-full bg-white font-semibold py-2 px-4 hover:bg-gray-100 transition-colors duration-150">
-            <img src="../../assets/images/meat.png" class="w-16 h-16 mr-4" alt="">
-            Poultry, Meat & Seafood
-        </button>
-        <button
-            class="flex items-center w-full bg-white font-semibold py-2 px-4 hover:bg-gray-100 transition-colors duration-150">
-            <img src="../../assets/images/milk.png" class="w-16 h-16 mr-4" alt="">
-            Diary, Eggs & Fridge
-        </button>
-        <button
-            class="flex items-center w-full bg-white font-semibold py-2 px-4 hover:bg-gray-100 transition-colors duration-150">
-            <img src="../../assets/images/freezer.png" class="w-16 h-16 mr-4" alt="">
-            Freezer
-        </button>
-        <button
-            class="flex items-center w-full bg-white font-semibold py-2 px-4 hover:bg-gray-100 transition-colors duration-150">
-            <img src="../../assets/images/drink.png" class="w-16 h-16 mr-4" alt="">
-            Drinks
-        </button>
-        <button
-            class="flex items-center w-full bg-white font-semibold py-2 px-4 hover:bg-gray-100 transition-colors duration-150">
-            <img src="../../assets/images/beer.png" class="w-16 h-16 mr-4" alt="">
-            Beer, Wine & Spirits
-        </button>
-        <button
-            class="flex items-center w-full bg-white font-semibold py-2 px-4 hover:bg-gray-100 transition-colors duration-150">
-            <img src="../../assets/images/cleaning.png" class="w-16 h-16 mr-4" alt="">
-            Cleaning
-        </button>
-        <button
-            class="flex items-center w-full bg-white font-semibold py-2 px-4 hover:bg-gray-100 transition-colors duration-150">
-            <img src="../../assets/images/pharmacy.png" class="w-16 h-16 mr-4" alt="">
-            Pharmacy
-        </button>
-        <button
-            class="flex items-center w-full bg-white font-semibold py-2 px-4 hover:bg-gray-100 transition-colors duration-150">
-            <img src="../../assets/images/pet.png" class="w-16 h-16 mr-4" alt="">
-            Pet
-        </button>
-        <button
-            class="flex items-center w-full bg-white font-semibold py-2 px-4 hover:bg-gray-100 transition-colors duration-150">
-            <img src="../../assets/images/home.png" class="w-16 h-16 mr-4" alt="">
-            Home & Lifestyle
-        </button>
+        <div *ngFor="let category of categories">
+            <button (click)="navigateToCategory(category.name)"
+                class="flex items-center w-full bg-white font-semibold py-2 px-4 hover:bg-gray-100 transition-colors duration-150">
+                <img src={{category.imageLink}} class="w-16 h-16 mr-4" alt="">
+                {{category.name}}
+            </button>
+        </div>
     </div>
 </div>
 <div class="flex w-full justify-between px-4 items-center">

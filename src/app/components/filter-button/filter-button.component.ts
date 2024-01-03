@@ -11,8 +11,13 @@ export class FilterButtonComponent {
   @Input() dropdownID: string ="";
 
   @Output() optionSelected: EventEmitter<string> = new EventEmitter();
+  ngOnInit(){
+    console.log(this.dropdownID);
+  }
+  selectedOption: string | null = null;
 
   onSelect(option: string) {
+    this.selectedOption = option;
     this.optionSelected.emit(option);
   }
 }

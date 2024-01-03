@@ -5,13 +5,17 @@
     <div class="flex">
       <button class="border border-black border-solid border-2 rounded-full px-4 py-2 mr-8 hover:bg-gray-100">
         Special Price</button>
-      <app-filter-button buttonName="Sort By" [dropdownOptions]="sortBy" dropdownID="dropdownSortBy" />
-      <app-filter-button buttonName="Type" [dropdownOptions]="types" dropdownID="dropdownType" />
-      <app-filter-button buttonName="Brand" [dropdownOptions]="brands" dropdownID="dropdowwnBrand" />
+      <app-filter-button buttonName="Sort By" [dropdownOptions]="sortBy" dropdownID="dropdownSortBy"
+        (optionSelected)="handleSortFilter($event)" />
+      <app-filter-button buttonName="Type" [dropdownOptions]="types" dropdownID="dropdownType"
+        (optionSelected)="handleTypeFilter($event)" />
+      <app-filter-button buttonName="Brand" [dropdownOptions]="brands" dropdownID="dropdowwnBrand"
+        (optionSelected)="handleBrandFilter($event)" />
     </div>
   </div>
-  <div class="flex flex-wrap">
-    <div *ngFor="let product of products" class="w-1/5 flex justify-center">
+
+  <div *ngIf="filteredProducts.length > 0" class="flex flex-wrap">
+    <div *ngFor="let product of filteredProducts" class="w-1/4 flex justify-center">
       <app-product-card [product]="product" [productInCart]="carts" (addToCart)="handleAddToCart($event)"
         (updateCart)="handleUpdateToCart($event)"></app-product-card>
     </div>

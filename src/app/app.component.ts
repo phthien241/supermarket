@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { MsalService } from '@azure/msal-angular';
 import { initFlowbite } from 'flowbite';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
