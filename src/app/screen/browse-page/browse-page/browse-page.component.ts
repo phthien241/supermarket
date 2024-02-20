@@ -13,6 +13,8 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class BrowsePageComponent {
 
+  category = null;
+
   filteredProducts: Product[] = [];
   products: Product[] = [];
   types: string[] = [];
@@ -28,6 +30,7 @@ export class BrowsePageComponent {
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
+      this.category = params.get("filter")
       this.productService.getProduct(params.get("filter")).subscribe(product => {
         this.products = product
         this.filteredProducts = this.products;
@@ -52,7 +55,6 @@ export class BrowsePageComponent {
         _id: cart.product._id
       }));
     });
-
   }
 
   handleAddToCart(product: CartItem) {

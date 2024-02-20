@@ -20,7 +20,7 @@ import { CartService } from 'src/app/services/cart.service';
 export class NavBarComponent {
   categories = [
     {
-      name: 'Fruit & Vegetables',
+      name: 'Fruits & Vegetables',
       imageLink: '../../assets/images/fruit-veg.png'
     },
     {
@@ -114,7 +114,8 @@ export class NavBarComponent {
     this.router.navigate(["/cart"]);
   }
   navigateToHome() {
-    this.router.navigate([""]);
+    // this.router.navigate([""]);
+    location.href = '/';
   }
   
   toggleBrowseProduct() {
@@ -145,7 +146,8 @@ export class NavBarComponent {
     this.showAccountDropdown = !this.showAccountDropdown
   }
   navigateToCategory(category: string) {
-    this.router.navigate([`/shop/browse/${category.toLowerCase()}`])
+    location.href = `/shop/browse/${category.toLowerCase()}`;
+    // this.router.navigate([`/shop/browse/${category.toLowerCase()}`])
     this.closeBrowseProduct();
   }
 }

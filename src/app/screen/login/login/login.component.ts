@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MsalService } from '@azure/msal-angular';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -8,19 +9,9 @@ import { MsalService } from '@azure/msal-angular';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  constructor(private authService: MsalService, private router: Router) {   
+  constructor(private userService: UserService, private router: Router) {   
   }
-
   login() {
-    this.authService.loginPopup().subscribe({
-      next: (authResult) => {
-        this.router.navigate(['']);
-      },
-      error: (error) => {
-        console.error(error);
-      }
-    });
+    this.userService.login();
   }
-
-
 }

@@ -6,14 +6,15 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrls: ['./filter-button.component.scss']
 })
 export class FilterButtonComponent {
+
   @Input() buttonName: string = 'Sort By';
   @Input() dropdownOptions: string[] = []; 
   @Input() dropdownID: string ="";
 
   @Output() optionSelected: EventEmitter<string> = new EventEmitter();
-  ngOnInit(){
-    console.log(this.dropdownID);
-  }
+
+
+
   selectedOption: string | null = null;
 
   onSelect(option: string) {

@@ -5,10 +5,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http'; // Import HttpClientModule
-import { MsalModule, MsalService, MSAL_INSTANCE } from '@azure/msal-angular';
-import { PublicClientApplication } from '@azure/msal-browser';
+import {MSAL_GUARD_CONFIG, MsalModule, MsalService, MSAL_INSTANCE, MsalGuardConfiguration, MsalGuard } from '@azure/msal-angular';
+import { InteractionType, LogLevel, PublicClientApplication } from '@azure/msal-browser';
+import { ErrorComponent } from './screen/error/error.component';
+
+export function loggerCallback(logLevel: LogLevel, message: string) {
+  console.log(message);
+}
 
 export function MSALInstanceFactory(): PublicClientApplication {
+
   return new PublicClientApplication({
     auth: {
       clientId: '624d74bd-acc1-487d-ab20-5c82d5da7e79',
@@ -20,14 +26,25 @@ export function MSALInstanceFactory(): PublicClientApplication {
       cacheLocation: 'localStorage'
     },
     system: {
-      allowNativeBroker: false, // Disables native brokering support
-  }
+      allowNativeBroker: false,
+    }
   });
+}
+
+export function MSALGuardConfigFactory(): MsalGuardConfiguration {
+  return {
+    interactionType: InteractionType.Redirect,
+    authRequest: {
+      scopes: ['https://adAzureBestBuy.onmicrosoft.com/api/demo.read']
+    },
+    loginFailedRoute:"login"
+  };
 }
 
 @NgModule({
   declarations: [
     AppComponent,
+    ErrorComponent,
   ],
   imports: [
     MsalModule,
@@ -41,6 +58,11 @@ export function MSALInstanceFactory(): PublicClientApplication {
       provide: MSAL_INSTANCE,
       useFactory: MSALInstanceFactory
     },
+    {
+      provide: MSAL_GUARD_CONFIG,
+      useFactory: MSALGuardConfigFactory
+    },
+    MsalGuard,
     MsalService
   ],
   bootstrap: [AppComponent]
