@@ -146,8 +146,8 @@ export class NavBarComponent {
     this.showAccountDropdown = !this.showAccountDropdown
   }
   navigateToCategory(category: string) {
-    location.href = `/shop/browse/${category.toLowerCase()}`;
-    // this.router.navigate([`/shop/browse/${category.toLowerCase()}`])
+    // location.href = `/shop/browse/${category.toLowerCase()}`;
+    this.router.navigate([`/shop/browse/${category.toLowerCase()}`])
     this.closeBrowseProduct();
   }
 }
