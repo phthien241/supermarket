@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http'; // Import HttpClientMod
 import {MSAL_GUARD_CONFIG, MsalModule, MsalService, MSAL_INSTANCE, MsalGuardConfiguration, MsalGuard } from '@azure/msal-angular';
 import { InteractionType, LogLevel, PublicClientApplication } from '@azure/msal-browser';
 import { ErrorComponent } from './screen/error/error.component';
+import { environment } from 'src/environment';
 
 export function loggerCallback(logLevel: LogLevel, message: string) {
   console.log(message);
@@ -17,10 +18,10 @@ export function MSALInstanceFactory(): PublicClientApplication {
 
   return new PublicClientApplication({
     auth: {
-      clientId: '624d74bd-acc1-487d-ab20-5c82d5da7e79',
-      authority: 'https://adAzureBestBuy.b2clogin.com/adAzureBestBuy.onmicrosoft.com/B2C_1_Best-Buy-SignIn-SignUp',
-      redirectUri: 'https://limitless-caverns-40418-b42a5a2d3917.herokuapp.com/',
-      knownAuthorities: ['adAzureBestBuy.b2clogin.com']
+      clientId: environment.auth.clientId,
+      authority: environment.auth.authority,
+      redirectUri: environment.auth.redirectUri,
+      knownAuthorities: [`${environment.auth.knownAuthorities}`]
     },
     cache: {
       cacheLocation: 'localStorage'
@@ -35,7 +36,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
   return {
     interactionType: InteractionType.Redirect,
     authRequest: {
-      scopes: ['https://adAzureBestBuy.onmicrosoft.com/api/demo.read']
+      scopes: [`${environment.auth.scope}`]
     },
     loginFailedRoute:"login"
   };
